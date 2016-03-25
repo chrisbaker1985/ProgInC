@@ -9,7 +9,8 @@ struct date
 	int day;
 	int year;
 };
-		
+	
+	
 int main (void)
 {
 
