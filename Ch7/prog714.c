@@ -30,7 +30,24 @@ int main (void)
 	return 0;
 }
 
-
+int getBaseInput(void)
+{
+	int base;
+	do
+	{
+		printf("Please provide a base to convert to between 2 and 16: ");
+		scanf("%i", &base);
+		if(base < 2)
+		{
+			printf("Base is too low!\n");
+		}
+		else if(base > 16)
+		{
+			printf("Base is too high\n");
+		}
+	}
+	while(base < 2 || base > 16);
+}
 
 
 void scalarMultiply(int nRows, int nCols, int matrix[nRows][nCols],

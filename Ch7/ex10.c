@@ -7,28 +7,11 @@ int isPrime(int n);
 
 int main(void)
 {
-	//int n;
+	int n;
 	
-	//n = getPositiveInt();
-	//printf("%i\n", isPrime(n));
-	
-	int i, prime;
-	
-	for(i = 3; i < 2000000000; i += 2)
-	{
-		if(i % 5 == 0)
-		{
-			continue;
-		}
-		
-		prime = isPrime(i);
-		
-		if(prime == 1)
-		{
-			printf("%i\n", i);
-		}	
-		
-	}
+	n = getPositiveInt();
+	printf("%i\n", isPrime(n));
+
 	return 0;
 }
 
