@@ -35,15 +35,29 @@ int main(void)
 	
 	n4.value = 400;
 	
-	insertEntry(&n4, &n3);
 	listStart = &n1;
+	printf("Entries before start: ");
+	printEntryValues(listStart, 3, 1);
 	
+	insertEntry(&n4, &n3);	
 	printf("Entries after insert: ");
 	printEntryValues(listStart, 4, 1);
 	
-	removeEntry(&n4);
+	removeEntry(&n2);
 	printf("Entires after remove: ");
 	printEntryValues(listStart, 3, 1);
+	
+	insertEntry(&n2, &n1);	
+	printf("Entries after insert: ");
+	printEntryValues(listStart, 4, 1);
+	
+	removeEntry(&n3);
+	printf("Entires after remove: ");
+	printEntryValues(listStart, 3, 1);	
+	
+	insertEntry(&n3, &n2);
+	printf("Entries after insert: ");
+	printEntryValues(listStart, 4, 1);
 }
 
 // Prints the values of a linked list. -1 = backwards, 1 = forwards
@@ -76,20 +90,15 @@ void removeEntry(struct entry *removedEntry)
 {	
 	struct entry *previousEntry = removedEntry->previous;
 	struct entry *nextEntry = removedEntry->next;
-	printf("Value - %i\n", removedEntry->value);	
-	printf("Previous Value - %i\n", previousEntry->value);
-	printf("Next Value - %i\n", nextEntry->value);
 	removedEntry->previous->next = removedEntry->next;
 	removedEntry->next->previous = removedEntry->previous;
-	printf("Updated previous-next Value - %i\n", removedEntry->previous->next->value);
-	printf("Updated Next-previous Value - %i\n", removedEntry->next->previous->value);
 }
 
 // Function that inserts a new entry and pointer element into a linked list
 void insertEntry(struct entry *newEntry, struct entry *previousEntry)
 {	
 	newEntry->next = previousEntry->next;
-	newEntry->previous = previousEntry->previous;
+	newEntry->previous = previousEntry->next->previous;
 	previousEntry->next = newEntry;
 	newEntry->next->previous = newEntry;		
 }
