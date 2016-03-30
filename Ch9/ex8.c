@@ -5,13 +5,14 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+
 int main(void)
 {
 	void replaceString(char source[], const char s1[], const char s2[]);
 	//char text[100] = "There's more than 1 way to skin a cat";
-	char text[100] = "Chris loves his wife";
+	char text[100] = "Replace 1 character";
 	
-	replaceString(text, "his wife", "Alesia");
+	replaceString(text, "1", "one");
 	
 	printf("%s\n", text);
 }
@@ -28,20 +29,63 @@ void replaceString(char source[], const char s1[], const char s2[])
 	startIndex = findString(source, s1);	
 	if(startIndex != -1) // It was found
 	{	
-		removeString(source, startIndex, getStringLength(s1));		
+		removeString(source, startIndex, getStringLength(s1) + 1);		
 		insertString(source, s2, startIndex);	
-	}
+	}	
 }
 
 void removeString(char source[], const int start, const int count)
-{	
-	int i = start + count;
+{
+	int i = 0, j = 0;	
+	
 	while(source[i] != '\0')
 	{	
-		source[i - count] = source[i];
+		
+		if(i == start - 1) // Skip count from the starting point (by index)
+		{
+			i += count;
+		}
+		else 
+		{
+			source[j] = source[i];
+			i++;
+		}
+		j++;		
+	}
+	source[j] = '\0';	
+}
+
+void insertString(char source[], const char string[], const int position)
+{
+	int i = 0, j = 0, k = 0, strLen = getStringLength(string),
+	newStrLen = strLen + getStringLength(source);
+	
+	char buffer[100] = "";
+	
+	while(source[i] != '\0')
+	{
+		buffer[i] = source[i];
 		i++;
 	}
-	source[i - 1] = '\0';
+	
+	buffer[i] = '\0';	
+	i = 0;
+	while(i <= newStrLen)
+	{
+					
+		if(i >= position && i <= position + strLen - 1)
+		{			
+			source[i] = string[j];		
+			j++;
+		}
+		else
+		{			
+ 			source[i] = buffer[k];
+			k++;
+		}
+		i++;		
+	}
+	source[i + 1] = '\0';
 }
 
 int getStringLength(const char source[])
@@ -51,40 +95,9 @@ int getStringLength(const char source[])
 	while(source[i] != '\0')
 	{
 		i++;
-	}
+	}	
 	
 	return i;
-}
-
-void insertString(char source[], const char string[], const int position)
-{
-	int i = 0, j = 0, k = 0;
-	char temporaryString[500];
-	
-	while(source[k] != '\0')
-	{	
-		if(i == position + j && string[j] != '\0')
-		{
-			temporaryString[i] = string[j];		
-			j++;
-		}
-		else
-		{
-			temporaryString[i] = source[k];
-			k++;
-		}
-		
-		i++;
-	}
-	
-	source[i] = '\0';
-		
-	i = 0;	
-	while(temporaryString[i] != '\0')
-	{
-		source[i] = temporaryString[i];
-		i++;
-	}
 }
 
 int findString(const char source[], const char search[])
@@ -116,3 +129,4 @@ int findString(const char source[], const char search[])
 	}	
 	return stringFoundIndex;
 }
+
